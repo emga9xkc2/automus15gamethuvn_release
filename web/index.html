@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html>
+<!-- <title>AUTO MU SS12</title> -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/w3.css">
+
+<head>
+	<link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+	<script src="/static/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="/eel.js"></script>
+	<script src="/static/myscript.js"></script>
+	<link href="/static/toast/toastr.css" rel="stylesheet" />
+	<script src="/static/toast/toastr.min.js"></script>
+	<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+
+
+</head>
+
+<body>
+	<style>
+		html,
+		body {
+			font-family: Verdana, sans-serif;
+			font-size: 14px;
+			line-height: 1.5;
+		}
+
+		.bold {
+			font-weight: bold;
+		}
+
+		.btn {
+			background-color: DodgerBlue;
+			border: none;
+			color: white;
+			padding: 10px 15px;
+			font-size: 12px;
+			cursor: pointer;
+			width: 41.16px;
+			margin-bottom: 5px;
+		}
+
+		.settingcss {
+			background-color: rgb(218, 18, 25);
+			border: none;
+			color: white;
+			padding: 1px 5px;
+			font-size: 10px;
+			cursor: pointer;
+			margin-left: 8px;
+			border-radius: 7px;
+		}
+
+		/* Darker background on mouse-over */
+		.settingcss:hover {
+			background-color: rgb(200, 22, 156);
+		}
+
+		.btn:hover {
+			background-color: RoyalBlue;
+		}
+
+		.newp {
+			line-height: 2.5;
+		}
+
+		.tabs {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.tab {
+			color: blue;
+			border: none;
+			flex: 1;
+			text-align: center;
+		}
+
+		.tabs .tab {
+			border: none;
+		}
+
+		/* Áp dụng cho tab có class là "active" */
+		.tabs .tab.active {
+			border: none;
+		}
+
+		.tab.active::after {
+			content: "";
+			display: block;
+			height: 4px;
+			/* background-color: blue; */
+			border-bottom: 3px solid red;
+		}
+
+		.popup {
+			display: none;
+			position: fixed;
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgba(0, 0, 0, 0.4);
+		}
+
+		.popup-content {
+			font-size: 15px;
+			background-color: white;
+			margin: 10% auto;
+			padding: 10px;
+			border: 1px solid #888;
+			width: 80%;
+			max-width: 800px;
+
+		}
+	</style>
+	<div class="w3-container">
+		<!-- <h2 id="info">AUTO MU SS12</h2> -->
+
+		<!-- <div class="w3-row"> -->
+		<!-- <a href="javascript:void(0)" onclick="openTab(event, 'quanlyaccount');">
+				<div class="w3-quarter tablink w3-bottombar w3-hover-light-grey w3-padding" style="width:33%">Quản lý
+					account</div>
+			</a> -->
+		<!-- <a href="javascript:void(0)" onclick="openTab(event, 'danhsachscript');">
+                <div class="w3-quarter tablink w3-bottombar w3-hover-light-grey w3-padding" style="width:20%">Danh sách
+                    kịch bản</div>
+            </a>
+            <a href="javascript:void(0)" onclick="openTab(event, 'script');">
+                <div class="w3-quarter tablink w3-bottombar w3-hover-light-grey w3-padding" style="width:20%">Thêm kịch
+                    bản</div>
+            </a> -->
+		<!-- <a href="javascript:void(0)" onclick="openTab(event, 'log');">
+                <div class="w3-quarter tablink w3-bottombar w3-hover-light-grey w3-padding" style="width:25%">Nhật ký
+                    hoạt động</div>
+            </a> -->
+		<!-- <a href="javascript:void(0)" onclick="openTab(event, 'caidatkhac');">
+				<div class="w3-quarter tablink w3-bottombar w3-hover-light-grey w3-padding" style="width:33%">Cài đặt
+					chung
+				</div>
+			</a>
+			<a href="javascript:void(0)" onclick="openTab(event, 'hdsd');">
+				<div class="w3-quarter tablink w3-bottombar w3-hover-light-grey w3-padding" style="width:33%">Hướng dẫn
+					sử dụng</div>
+			</a> -->
+		<!-- </div> -->
+
+
+
+		<div id="quanlyaccount" class="tabs" style="display:block">
+			<table class="w3-table w3-bordered" id="table">
+				<tr>
+					<th>Account</th>
+					<th>Trạng thái</th>
+				</tr>
+			</table>
+		</div>
+		<style>
+			.tabs {
+				display: flex;
+			}
+
+			.tab {
+				padding: 10px;
+				border: 1px solid #ccc;
+				cursor: pointer;
+			}
+
+
+
+			.tab-content {
+				display: none;
+			}
+
+			.tab-content.active {
+				display: block;
+			}
+
+			.fixline {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-top: 5px;
+				/* Khoảng cách giữa các div có class fixline */
+			}
+
+			.fixline label {
+				/* font-weight: bold; */
+				flex: 1 0 1;
+				/* Tự động điều chỉnh độ rộng của label */
+				margin-right: 5px;
+				/* Khoảng cách giữa label và input */
+			}
+
+			.fixline input {
+				flex: 1 0 1;
+				/* Tự động điều chỉnh độ rộng của input */
+			}
+		</style>
+
+		<div id="pid" value="">
+			<div class="tabs">
+				<div class="tab active" data-tab="tab1">Thông tin</div>
+				<div class="tab" data-tab="tab2">Tiện ích</div>
+				<div class="tab" data-tab="tab3">Cài đặt reset</div>
+			</div>
+			<div class="tab-content" id="tab1">
+				<div class="fixline">
+					<label>Tài khoản</label>
+					<label id="taikhoandangnhap"></label>
+				</div>
+				<div class="fixline">
+					<label>Nhân vật</label>
+					<label id="namehero"></label>
+				</div>
+				<div class="fixline">
+					<label>Class</label>
+					<label id="class"></label>
+				</div>
+				<div class="fixline">
+					<label>Bản đồ</label>
+					<label id="map"></label>
+				</div>
+				<div class="fixline">
+					<label>Level</label>
+					<label id="level"></label>
+				</div>
+
+
+			</div>
+			<div class="tab-content" id="tab2">
+				<div class="w3-row">
+					<input class="w3-check" name="autosavecheckbox" id="autotrain" type="checkbox">
+					<label>Auto Train</label>
+				</div>
+
+
+
+			</div>
+			<div class="tab-content" id="tab3">
+
+				<div class="fixline">
+					<label>Sức mạnh</label>
+					<input name="autosavetxt" id="addstr" type="text" value="" placeholder="0">
+				</div>
+
+				<div class="fixline">
+					<label>Nhanh nhẹn</label>
+					<input name="autosavetxt" id="addagi" type="text" value="" placeholder="0">
+				</div>
+
+
+				<div class="fixline">
+					<label>Thể lực</label>
+					<input name="autosavetxt" id="addvit" type="text" value="" placeholder="0">
+				</div>
+				<div class="fixline">
+					<label>Năng lượng</label>
+					<input name="autosavetxt" id="addene" type="text" value="" placeholder="0">
+				</div>
+
+				<div class="fixline">
+					<label>Lãnh đạo</label>
+					<input name="autosavetxt" id="addcmd" type="text" value="" placeholder="0">
+
+
+				</div>
+
+				<div class="fixline">
+					<label>Mật khẩu web</label>
+					<input name="autosavetxt" id="pass2" type="text" value="" placeholder="0">
+				</div>
+				<div class="fixline">
+					<label>Số phút reset / lần</label>
+					<input name="autosavetxt" id="sophutrs" type="number" value="" placeholder="0">
+				</div>
+
+				<input class="w3-check" name="autosavecheckbox" id="resetingame" type="checkbox">
+				<label>Reset ingame</label>
+
+			</div>
+
+		</div>
+
+
+
+
+		<br><textarea id="nhatkyhoatdong" rows="12" style="width: 100%; resize: none"></textarea>
+		<div style="float: left;">
+			<p id="user" style="display:inline; line-height: 2.5;"></p><button class="settingcss"
+				style="display:inline; background-color:DodgerBlue" id="activeaccount" title="Kích hoạt tài khoản"><i
+					class="fa fa-user-circle"></i></button>
+			<p id="user" style="display:inline; line-height: 2.5;"></p><button class="settingcss"
+				style="display:inline; background-color:blueviolet" id="huongdansudung" title="Hướng dẫn sử dụng"><i
+					class="fa fa-book"></i></button>
+		</div>
+
+
+
+
+		<div style="float: right;">
+			<p id="version" style="display:inline;">...</p>
+			<button class="settingcss" style="color: rgb(212, 255, 0); display:inline;" id="updateversion"
+				title="Cập nhật phiên bản mới"><i class="fa fa-download"></i></button>
+		</div>
+	</div>
+
+	<div id="caidatkhac" class="w3-container tabs" style="display:none">
+
+
+		<br><br><input class="w3-input w3-animate-input" type="text" id="tokenTelegram" placeholder="Token telegram">
+		<br><input class="w3-input w3-animate-input" type="text" id="apiAnycaptcha"
+			placeholder="API Key anycaptcha.com">
+
+		<br>
+
+		<br>
+		<div class="w3-center">
+			<div class="w3-bar">
+				<button onclick="saveSetting()" class="w3-button w3-block w3-teal">Lưu lại</button>
+			</div>
+		</div>
+		<div id="saveSettingStatus"></div>
+	</div>
+	<div class="popup">
+		<div class="popup-content">
+			<!-- Nội dung popup -->
+			<div id="hdsd">
+				<p>- Ấn F2 để lưu tọa độ bãi cần train</p>
+				<p>- Ấn F3 để tạm dừng auto</p>
+				<p>- Ấn F4 để tiếp tục chạy auto</p>
+				<p>- Ấn F7 để chạy auto ngay khi bị pk</p>
+				<p>- Auto buff pc sum: vào thư mục data, tạo file buffpc.txt thêm nhân vật sum vào rồi lưu lại</p>
+				<p>- Chat /ta để tắt auto ra bãi khi bị pk. Chat /ba để bật lại auto</p>
+				<p>- Chat /bz để bật auto nhặt zen. Chat /tz để tắt auto nhặt zen</p>
+				<p>- Chat /mv 100 100 để tự di chuyển tới vị trí 100 100</p>
+				<p>- Chat /kc để kẹp chuột phải</p>
+				<p>- Chat /gom để bật gom quái. Chat /tg để tắt gom quái</p>
+				<p>- Chat /gomz để bật gom quái, kể cả khi có người khác bên cạnh. Chat /tg để tắt gom quái</p>
+				<p>- Nếu thoát auto rồi mà vẫn thấy auto hoạt động, hãy bấm tổ hợp phím Ctrl F4 để thoát hẳn</p>
+				<p>- Liên hệ telegram: <a href="https://t.me/thoconlonton" target="_blank"
+						style="color:hsl(246, 100%, 50%)">https://t.me/thoconlonton</a></p>
+				<p>- Liên hệ facebook: <a href="https://www.facebook.com/profile.php?id=100041831656067" target="_blank"
+						style="color:hsl(246, 100%, 50%)">https://www.facebook.com/profile.php?id=100041831656067</a>
+				</p>
+
+
+				<p><a target="_blank" style="color:hsl(207, 100%, 50%)"
+						href="https://github.com/emga9xkc2/automus12gamethuvn_release/blob/main/README.md"><b>- Chi tiết
+							phiên
+							bản xem tại
+							đây</b></a>
+				<div id="hdsdStatus"></div>
+
+
+				</p>
+			</div>
+			<!-- Nút đóng popup -->
+			<span class="close">&times;</span>
+		</div>
+	</div>
+	<div id="id01" class="w3-modal">
+		<div class="w3-modal-content w3-animate-top w3-card-4">
+			<header class="w3-container w3-teal">
+				<span onclick="document.getElementById('id01').style.display='none'"
+					class="w3-button w3-display-topright">&times;</span>
+				<h2 id="kichbannv">Chọn kịch bản</h2>
+			</header>
+			<div id="listkichbannv"></div>
+		</div>
+	</div>
+
+	</div>
+
+	<script>
+
+		// $(".tab[data-tab='tab1']").addClass("active");
+		$("#tab1").addClass("active");
+		$(".tab").click(function () {
+			// Lấy data-tab của tab được click
+			var tab_id = $(this).attr("data-tab");
+
+			// Ẩn tất cả các nội dung của tab và xóa lớp active của các tab
+			$(".tab").removeClass("active");
+			$(".tab-content").removeClass("active");
+
+			// Hiển thị nội dung của tab được click và thêm lớp active cho tab
+			$(this).addClass("active");
+			$("#" + tab_id).addClass("active");
+		});
+
+		$('*[name="autosavetxt"]').on('change', function () {
+			var heroselect = $("#namehero").text()
+			if (heroselect != "") {
+				var key = this.id
+				var value = this.value
+				eel.saveCongDiemNew({ hero: heroselect, [key]: value })
+			}
+		})
+		$('*[name="autosavecheckbox"]').on('change', function () {
+			var heroselect = $("#namehero").text()
+			if (heroselect != "") {
+				var key = this.id
+				var value = this.checked ? 1 : 0;
+				eel.saveCongDiemNew({ hero: heroselect, [key]: value })
+			}
+		})
+
+
+		var apikeyactive = "apikeyactive"
+		// disableF5();
+		var mapOptions = "<option>Elbeland3</option><option>Devias2</option><option>Dungeon2</option><option>LostTower3</option><option>LostTower5</option><option>LostTower7</option><option>Tarkan2</option><option>Icarus</option><option>Kanturu_ruin2</option><option>Kanturu_ruin_island</option><option>Kanturu_Remain</option><option>Karutan1</option><option>Karutan2</option><option>Barrack</option><option>Kalima</option>";
+		var defaultMapOptions = "<option disabled selected>Chọn map</option>" + mapOptions
+		setHtmlCssSelector("#mapSelect", defaultMapOptions);
+		eel.expose(pythonToJS);               // Expose this function to Python
+		function pythonToJS(x) {
+			const txtArea = document.getElementById("nhatkyhoatdong");
+			txtArea.value = x + "\r\n" + txtArea.value;
+		}
+
+		function getSetting() {
+			eel.getSetting()(function (callback) {
+				var result = callback.result
+				var apiAnycaptcha = result.apiAnycaptcha
+
+
+				var tokenTelegram = result.tokenTelegram
+				console.log(result)
+				localStorage.setItem(apikeyactive, result.apikeyActive)
+
+
+				setValueCssSelector("#tokenTelegram", tokenTelegram)
+				setValueCssSelector("#apiAnycaptcha", apiAnycaptcha)
+				// console.log(info)
+			}
+			)
+		}
+		getSetting()
+		function saveSetting() {
+			apiAnycaptcha = getValue('#apiAnycaptcha')
+
+			apikeyActive = localStorage.getItem(apikeyactive)
+
+			tokenTelegram = getValue('#tokenTelegram')
+			eel.saveSetting(apiAnycaptcha, apikeyActive, tokenTelegram)(function (callback) {
+				var mess = callback.mess
+				if (mess == "success") {
+					setHtmlCssSelector("#saveSettingStatus", `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
+                    <h3>Lưu lại thành công</h3>
+                </div>`)
+				} else {
+					setHtmlCssSelector("#saveSettingStatus", `<div class="w3-panel w3-pale-red w3-bottombar w3-border-red w3-border">
+                    <h3>Lưu lại thất bại</h3>
+                </div>`)
+				}
+				console.log(callback)
+			}
+			)
+		}
+		eel.expose(update_progress);
+		function update_progress(percent) {
+			percent = percent.toString()
+			var progressValue = ""
+			if (percent.includes("_")) {
+				progressValue = " " + percent.split("_")[1]
+				percent = percent.split("_")[0]
+				if (progressValue.includes("/")) {
+					progressValue = "(" + progressValue + ")"
+				}
+			}
+			percent = parseInt(percent)
+			if (percent == 0) {
+				$("#progresss").css("visibility", "visible")
+				$("#progress").css("visibility", "visible")
+				$("#progressValue").css("visibility", "visible")
+				return
+			}
+			$("#progress").css("width", percent + "%")
+			if (percent > 0) {
+				$("#progressValue").html(percent + "%" + progressValue);
+			}
+			// $("#progress").val(percent)
+		}
+
+		$("#updateversion").bind("click", function () {
+			// alert("1234")
+			showUpdate({ title: "Đang cập nhật phiên bản mới. Xin chờ..." })
+
+
+			update_progress(0)
+
+
+			eel.autoUpdate()(function (callback) {
+				var mess = callback.mess
+				if (mess == "success") {
+					setHtmlCssSelector("#updateStatus", `Đã cập nhật xong. Hãy tắt tool đi mở lại để dùng phiên bản mới`)
+					$("#updateStatus").css("color", "green")
+				} else {
+					setHtmlCssSelector("#updateStatus", `Cập nhật thất bại. Hãy thử lại.`)
+				}
+				console.log(callback)
+			}
+			)
+		});
+		$("#caidatautopk").bind("click", function () {
+			var heroselect = $("#namehero").text()
+			if (heroselect == "") {
+				toastError("Hãy nhân vật cần cài đặt trên bảng nhân vật")
+				return
+			}
+			showListPK(heroselect)
+		});
+		$("#huongdansudung").bind("click", function () {
+			// Hiển thị popup
+			$(".popup").css("display", "block");
+		});
+
+		// Ẩn popup khi người dùng nhấp nút đóng
+		$(".close").click(function () {
+			$(".popup").css("display", "none");
+		});
+
+		// Ẩn popup khi người dùng nhấp chuột bên ngoài
+		$(window).click(function (event) {
+			if (event.target == $(".popup")[0]) {
+				$(".popup").css("display", "none");
+			}
+		});
+		$("#activeaccount").bind("click", function () {
+			showDialog({
+				title: "Nhập key để kích hoạt phần mềm",
+				value: localStorage.getItem(apikeyactive),
+			}).then(function (value) {
+				if (value === "") {
+					return
+				}
+
+				eel.kichHoatTaiKhoan(value)(function (callback) {
+					console.log(value)
+					// eel.updateSetting(apikeyactive, value)
+					localStorage.setItem(apikeyactive, value)
+					var mess = callback.mess
+					toastWarning(mess)
+					saveSetting()
+				})
+			})
+		});
+		function callback_saveScript(callback) {
+			var mess = callback.mess
+			if (mess == "success") {
+				setHtmlCssSelector("#saveScriptStatus", `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
+                    <h3>Lưu lại thành công</h3>
+                </div>`)
+			} else {
+				setHtmlCssSelector("#saveScriptStatus", `<div class="w3-panel w3-pale-red w3-bottombar w3-border-red w3-border">
+                    <h3>Lưu lại thất bại</h3>
+                </div>`)
+			}
+			console.log(callback)
+		}
+
+		function saveScript() {
+			namescript = getValue('#nameScript')
+			mapselect = getTextSelect('#mapSelect')
+			x = getValue('#toaDoX')
+			y = getValue('#toaDoY')
+			levelmin = getValue('#levelmin')
+			levelmax = getValue('#levelmax')
+			timequaylaikhibipk = getValue('#timequaylaikhibipk')
+			nhatzen = getCheckboxChecked('#checkNhatZen')
+			eel.saveScript(namescript, mapselect, x, y, levelmin, levelmax, timequaylaikhibipk, nhatzen)(callback_saveScript)
+		}
+		function openTab(evt, cityName) {
+			var i, x, tablinks;
+			x = document.getElementsByClassName("tabs");
+			for (i = 0; i < x.length; i++) {
+				x[i].style.display = "none";
+			}
+			tablinks = document.getElementsByClassName("tablink");
+			for (i = 0; i < x.length; i++) {
+				tablinks[i].className = tablinks[i].className.replace(" w3-border-red", "");
+			}
+			document.getElementById(cityName).style.display = "block";
+			evt.currentTarget.firstElementChild.className += " w3-border-red";
+		}
+
+		function callback_getScript(callback) {
+			var info = callback.result
+
+			var render = "<tr><th>Tên Script</th><th>Map</th><th>X</th><th>Y</th><th>Level min</th><th>Level max</th><th>Time quay lại</th><th>Nhặt zen</th><th>Action</th></tr>"
+			for (const x in info) {
+				var infoht = info[x]
+				var zen = infoht.zen
+				var checkedzen = false
+				if (zen == "1") {
+					checkedzen = true
+				}
+				render = render + `<tr id="${infoht.id}"><td><input class="w3-input w3-border-0" type="text" id="ten${infoht.id}" value="${infoht.ten}"></input></td><td><select class="w3-select" id="map${infoht.id}"><option value="${infoht.map}" selected>${infoht.map}</option>${mapOptions}</select></td><td><input class="w3-input w3-border-0" type="number" id="x${infoht.id}" value="${infoht.x}"></input></td><td><input class="w3-input w3-border-0" type="number" id="y${infoht.id}" value="${infoht.y}"></input></td><td><input class="w3-input w3-border-0" type="number" id="levelmin${infoht.id}" value="${infoht.levelmin}"></input></td><td><input class="w3-input w3-border-0" type="number" id="levelmax${infoht.id}" value="${infoht.levelmax}"></input></td><td><input class="w3-input w3-border-0" type="number" id="timequaylaikhibipk${infoht.id}" value="${infoht.timequaylaikhibipk}"></input></td><td><input type="checkbox" id="zen${infoht.id}" ${checkedzen ? "checked" : ""}></td><td><a href="#" onclick="updateScript(${infoht.id})">Cập nhật</a> | <a href="#" onclick="deleteScript(${infoht.id})">Xóa</a> </td></tr>`
+			}
+			setHtmlCssSelector('#tabledanhsachscript', render)
+		}
+		function getScript() {
+			eel.getScript()(callback_getScript)
+		}
+		getScript()
+		function callback_updateScript(callback) {
+			var mess = callback.mess
+			if (mess == "success") {
+				alert("Update thành công")
+			} else {
+				alert("Update thất bại")
+			}
+			console.log(callback)
+		}
+		function updateScript(id) {
+			ten = getValue(`#ten${id}`)
+			map = getTextSelect(`#map${id}`)
+			x = getValue(`#x${id}`)
+			y = getValue(`#y${id}`)
+			levelmin = getValue(`#levelmin${id}`)
+			levelmax = getValue(`#levelmax${id}`)
+			timequaylaikhibipk = getValue(`#timequaylaikhibipk${id}`)
+			zen = getCheckboxChecked(`#zen${id}`)
+			eel.updateScript(id, ten, map, x, y, levelmin, levelmax, timequaylaikhibipk, zen)(callback_updateScript)
+		}
+		function callback_deleteScript(callback) {
+			var mess = callback.mess
+			if (mess == "success") {
+				alert("Xóa thành công")
+				document.getElementById(callback.id).remove();
+			} else {
+				alert("Xóa thất bại")
+			}
+			console.log(callback)
+		}
+		function deleteScript(id) {
+			eel.deleteScript(id)(callback_deleteScript)
+		}
+		function editKichBanHero(hero, idkichban, tenkichban) {
+			enable = getCheckboxChecked('#kichban_' + hero + "_" + idkichban)
+			eel.editKichBanHero(hero, tenkichban, enable)(function (callback) {
+				var mess = callback.mess
+				console.log(mess);
+			}
+			)
+		}
+		function showKichBan(hero) {
+			document.getElementById('id01').style.display = 'block'
+			setHtmlCssSelector("#kichbannv", "Chọn kịch bản - " + hero)
+			eel.showKichBan(hero)(function (callback) {
+				var result = callback.result
+				var listcheck = ""
+				for (i = 0; i < result.length; i++) {
+					var resultht = result[i]
+					var kichhoat = resultht.enable
+					var checkedkichhoat = false
+					if (kichhoat == "1") {
+						checkedkichhoat = true
+					}
+					console.log(kichhoat)
+					listcheck = listcheck + `<p><input class="w3-check" type="checkbox" ${checkedkichhoat ? "checked" : ""} id="kichban_${hero}_${resultht.id}" onclick="editKichBanHero('${hero}','${resultht.id}', '${resultht.ten}')"><label>${resultht.ten}</label></p>`
+				}
+				setHtmlCssSelector("#listkichbannv", listcheck)
+				console.log(result);
+			}
+			)
+		}
+		function showListPK(hero) {
+			document.getElementById('id01').style.display = 'block'
+			setHtmlCssSelector("#kichbannv", "Danh sách PK - " + hero)
+			eel.showListPK(hero)(function (callback) {
+				var result = callback.result
+				var html = `<br><div class="w3-container"><textarea id="listpk" rows="15" style="width: 100%; resize: none"></textarea></div>
+                <br>
+                <div class="w3-row">
+  <div class="w3-half w3-container">
+    <button onclick="quetClone('${hero}')" class="w3-button w3-block w3-teal">Quét clone</button>
+  </div>
+  <div class="w3-half w3-container">
+    <button onclick="saveListPK('${hero}')" class="w3-button w3-block w3-teal">Lưu lại</button>
+  </div>
+</div><div id="saveCongdiemStatus"></div><br><br>`
+				setHtmlCssSelector("#listkichbannv", html)
+				const txtArea = document.getElementById("listpk");
+				txtArea.value = result;
+
+			}
+			)
+		}
+		function saveCongDiem(hero) {
+			var str = getValue("#str")
+			console.log(str)
+			var agi = getValue("#agi")
+			var vit = getValue("#vit")
+			var ene = getValue("#ene")
+			var cmd = getValue("#cmd")
+			var pass2 = getValue("#pass2")
+			var sophutrs = getValue("#sophutrs")
+			var trainexp = getCheckboxChecked('#trainexp')
+			var trainstadium = getCheckboxChecked('#trainstadium')
+			var resetingame = getCheckboxChecked('#resetingame')
+			var annv = getCheckboxChecked('#annv')
+			var anmain = getCheckboxChecked('#anmain')
+			eel.saveCongDiem(hero, str, agi, vit, ene, cmd, pass2, sophutrs, trainexp, trainstadium, annv, anmain, resetingame)(function (callback) {
+				console.log(callback)
+
+				var mess = callback.mess
+				if (mess != "success") {
+					setHtmlCssSelector("#saveCongdiemStatus", `<div class="w3-panel w3-pale-red w3-bottombar w3-border-red w3-border">
+                    <h3>Lưu điểm thất bại</h3>
+                    <p>${mess}</p>
+                </div>`  )
+					return
+				}
+				var result = callback.result
+				setHtmlCssSelector("#saveCongdiemStatus", `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
+                    <h3>Lưu điểm thành công</h3>
+                    <p>${result}</p>                    
+                </div>`)
+			}
+			)
+		}
+		function saveListPK(hero) {
+			const txtArea = document.getElementById("listpk");
+			var value = txtArea.value;
+
+			eel.saveListPK(hero, value)(function (callback) {
+				console.log(callback)
+				var mess = callback.mess
+				if (mess != "success") {
+					setHtmlCssSelector("#saveCongdiemStatus", `<div class="w3-panel w3-pale-red w3-bottombar w3-border-red w3-border">
+                    <h3>Lưu thất bại</h3>
+                    <p>${mess}</p>
+                </div>`  )
+					return
+				}
+				var result = callback.result
+				setHtmlCssSelector("#saveCongdiemStatus", `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
+                    <h3>Lưu thành công</h3>
+                    <p>${result}</p>                    
+                </div>`)
+			}
+			)
+		}
+		function quetClone(hero) {
+			const txtArea = document.getElementById("listpk");
+			var value = txtArea.value;
+			eel.quetClone(hero)(function (callback) {
+				console.log(callback)
+				var mess = callback.mess
+				if (mess != "success") {
+					setHtmlCssSelector("#saveCongdiemStatus", `<div class="w3-panel w3-pale-red w3-bottombar w3-border-red w3-border">
+                <h3>Quét clone thất bại</h3>
+                <p>${mess}</p>
+            </div>`  )
+					return
+				}
+				var result = callback.result.split("\n")
+				var lines = value.split("\n");
+				var addedItems = [];
+				for (var i = 0; i < result.length; i++) {
+					var item = result[i].trim();
+					if (!lines.includes(item) && !addedItems.includes(item)) {
+						lines.unshift(item);
+						addedItems.push(item);
+					}
+				}
+				value = lines.join("\n");
+				setHtmlCssSelector("#saveCongdiemStatus", `<div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
+            <h3>Quét clone thành công</h3>                
+        </div>`)
+				txtArea.value = value;
+			})
+		}
+
+		$("#table").on("click", "tr", function () {
+			var pid = this.id
+			if (pid == "") {
+				return
+			}
+			eel.getInfoPid(pid)(function (callback) {
+				console.log(callback)
+				var namehero = callback["name"]
+				var map = callback["map"]
+				var level = callback["level"]
+				var taikhoandangnhap = callback["taikhoandangnhap"]
+				var classs = callback["class"]
+				setHtmlCssSelector("#namehero", namehero)
+				setHtmlCssSelector("#taikhoandangnhap", taikhoandangnhap)
+				setHtmlCssSelector("#level", level)
+				setHtmlCssSelector("#map", map)
+				setHtmlCssSelector("#class", classs)
+				console.log(callback)
+				eel.getCongDiem(namehero)(function (callback) {
+					var result = callback.result;
+					var { addstr: addstr, addagi: addagi, addvit: addvit, addene: addene, addcmd: addcmd, pass2, sophutrs, trainexp = 0, trainstadium = 0, annv = 0, anmain = 0, resetingame = 0, autopk = 0, autotrain = 0, autoreset = 0 } = result;
+
+					trainexp = trainexp == 0 ? false : trainexp;
+					trainstadium = trainstadium == 0 ? false : trainstadium;
+					annv = annv == 0 ? false : annv;
+					anmain = anmain == 0 ? false : anmain;
+					resetingame = resetingame == 0 ? false : resetingame;
+					autopk = autopk == 0 ? false : autopk;
+					autotrain = autotrain == 0 ? false : autotrain;
+					autoreset = autoreset == 0 ? false : autoreset;
+
+					$("#addstr").val(addstr);
+					$("#addagi").val(addagi);
+					$("#addvit").val(addvit);
+					$("#addene").val(addene);
+					$("#addcmd").val(addcmd);
+					$("#pass2").val(pass2);
+					$("#sophutrs").val(sophutrs);
+					setCheckboxCssSelector("#trainexp", trainexp);
+					setCheckboxCssSelector("#trainstadium", trainstadium);
+					setCheckboxCssSelector("#annv", annv);
+					setCheckboxCssSelector("#anmain", anmain);
+					setCheckboxCssSelector("#resetingame", resetingame);
+					setCheckboxCssSelector("#autopk", autopk);
+					setCheckboxCssSelector("#autoreset", autoreset);
+					setCheckboxCssSelector("#autotrain", autotrain);
+				})
+			})
+			$("#pid").attr("value", pid)
+
+			$("#table tr").removeClass("bold");
+			$(this).css("color", "red");
+			$(this).addClass("bold");
+
+
+
+		});
+
+		// function callback_getInfo(callback) {
+		// 	console.log(callback)
+		// 	var info = callback.result
+		// 	var keystatus = callback.keystatus
+		// 	setHtmlCssSelector("#hsd", keystatus.status)
+		// 	var render = `<tr><th>Account</th><th>Name</th><th>Map</th><th>Auto Reset</th><th>Auto PK</th><th>Stop</th><th>Level</th><th>Action</th></tr>`
+
+
+		// 	for (const x in info) {
+		// 		var infoht = info[x]
+		// 		render = render + `<tr><td>${infoht.taikhoandangnhap}</td><td>${infoht.namehero}</td><td>${infoht.map}</td><td><input type="checkbox" ${infoht.cayreset ? "checked" : ""} id="cayreset_${infoht.namehero}" name="cayrs" onclick="autoCayReset('${infoht.namehero}')"></td><td><input type="checkbox" ${infoht.autopk ? "checked" : ""} id="autopk_${infoht.namehero}" onclick="autoPK('${infoht.namehero}')"></td><td><input type="checkbox" ${infoht.stop ? "checked" : ""} id="stop_${infoht.namehero}" onclick="stopHero('${infoht.namehero}')"></td><td>${infoht.level}</td><td><button onClick="showListPK('${infoht.namehero}')" class="w3-button w3-teal">List PK</button><button onClick="showCongDiem('${infoht.namehero}')" class="w3-button w3-green">Cài đặt</button></td></tr>`
+		// 	}
+		// 	setHtmlCssSelector('#table', render)
+
+		// 	// newtitle = "AUTO MU SS12 " + callback.version
+		// 	// document.title = newtitle
+		// 	// setHtmlCssSelector('#info', newtitle)
+		// }
+		// setInterval(function () {
+		// eel.getInfo()(callback_getInfo);
+		// }, 1000);
+
+
+		// setInterval(function () {
+		// 	if (window.closed === false) {
+		// 		eel.checkEelRunning()
+		// 	}
+		// }, 1000);
+
+
+
+		$('#checkAllAutoRS').change(function () {
+			console.log("12345")
+			$('input[name="cayrs"]').prop('checked', $(this).prop('checked'));
+		});
+		function autoCayZen(namehero) {
+			var checkBox = document.getElementById("cayzen_" + namehero).checked;
+			var value = "0"
+			if (checkBox) {
+				value = "1"
+			}
+			httpGetJson("/autocayzen?tennv=" + namehero + "&cayzen=" + value)
+		}
+		function autoCayReset(namehero) {
+			namehero = namehero.split("(")[0].trim();
+			var checkBox = document.getElementById("cayreset_" + namehero).checked;
+			var value = "0"
+			if (checkBox) {
+				value = "1"
+			}
+			eel.setCayRS(namehero, value)(function (callback) {
+				console.log(callback)
+			}
+			)
+		}
+		function autoPK(namehero) {
+			namehero = namehero.split("(")[0].trim();
+			var checkBox = document.getElementById("autopk_" + namehero).checked;
+			var value = "0"
+			if (checkBox) {
+				value = "1"
+			}
+			eel.setAutoPK(namehero, value)(function (callback) {
+				console.log(callback)
+			}
+			)
+		}
+		function stopHero(namehero) {
+			namehero = namehero.split("(")[0].trim();
+			var checkBox = document.getElementById("stop_" + namehero).checked;
+			var value = "0"
+			if (checkBox) {
+				value = "1"
+			}
+			eel.stopHero(namehero, value)
+		}
+		function Reset(taikhoandangnhap, namehero) {
+			httpGetJson("/reset?tk=" + taikhoandangnhap + "&mk=pass&tennv=" + namehero)
+			var myInterval = setInterval(function () {
+				var logreset = httpGetJson("/logreset?tk=" + taikhoandangnhap)
+				var status = logreset.status
+				toastr.warning(taikhoandangnhap + " => " + logreset.status);
+				if (status == "Tài khoản đang chơi không thể reset" || status == "Reset Success" || status == "Cần level") {
+					clearInterval(myInterval);
+				}
+
+			}, 10000);
+		}
+
+	</script>
+
+</body>
+
+</html>
