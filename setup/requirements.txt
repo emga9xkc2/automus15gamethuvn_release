@@ -13,8 +13,8 @@ Pillow
 #timestring
 pynput
 aes-everywhere
-ahk
-ahk[binary]
+# ahk
+# ahk[binary]
 # python-telegram-bot
 numpy
 #pywebview
