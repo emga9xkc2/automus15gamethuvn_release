@@ -18,4 +18,4 @@ ahk[binary]
 numpy
 #pywebview
 #cefpython3
-win32gui
+pywin32
