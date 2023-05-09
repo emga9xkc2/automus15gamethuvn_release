@@ -2,17 +2,18 @@ pymem
 pywin32
 pyautogui
 gevent==22.10.1
+pycryptodome
 eel
 tqdm
 requests
-#wmi
+wmi
 pyautoit
 psutil
 # pytesseract
 Pillow
 #timestring
 pynput
-aes-everywhere
+
 # ahk
 # ahk[binary]
 # python-telegram-bot
