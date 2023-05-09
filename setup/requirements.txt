@@ -1,4 +1,5 @@
 pymem
+pywin32
 pyautogui
 gevent==22.10.1
 eel
@@ -18,4 +19,3 @@ ahk[binary]
 numpy
 #pywebview
 #cefpython3
-pywin32
