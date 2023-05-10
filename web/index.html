@@ -234,7 +234,18 @@
 			<div class="tab-content" id="tab2">
 				<div class="w3-row">
 					<input class="w3-check" name="autosavecheckbox" id="autotrain" type="checkbox">
-					<label>Auto Train</label>
+					<label>Auto train</label>
+				</div>
+				<div class="w3-row">
+					<div class="w3-bar-item">
+						<input class="w3-radio" type="radio" name="autoreset" value="noreset" checked>
+						<label>Không reset</label>
+					</div>
+					<div class="w3-bar-item">
+						<input class="w3-radio" type="radio" name="autoreset" value="resetbacingame">
+						<label>Reset bạc trong game</label>
+					</div>
+
 				</div>
 
 
@@ -278,8 +289,7 @@
 					<input name="autosavetxt" id="sophutrs" type="number" value="" placeholder="0">
 				</div>
 
-				<input class="w3-check" name="autosavecheckbox" id="resetingame" type="checkbox">
-				<label>Reset ingame</label>
+
 
 			</div>
 
@@ -397,11 +407,19 @@
 			if (heroselect != "") {
 				var key = this.id
 				var value = this.checked ? 1 : 0;
+
 				eel.saveCongDiemNew({ hero: heroselect, [key]: value })
 			}
 		})
+		$('*[name="autoreset"]').on('change', function () {
+			var heroselect = $("#namehero").text()
+			if (heroselect != "") {
+				var key = this.name
+				var value = this.value
 
-
+				eel.saveCongDiemNew({ hero: heroselect, [key]: value })
+			}
+		});
 		var apikeyactive = "apikeyactive"
 		// disableF5();
 		var mapOptions = "<option>Elbeland3</option><option>Devias2</option><option>Dungeon2</option><option>LostTower3</option><option>LostTower5</option><option>LostTower7</option><option>Tarkan2</option><option>Icarus</option><option>Kanturu_ruin2</option><option>Kanturu_ruin_island</option><option>Kanturu_Remain</option><option>Karutan1</option><option>Karutan2</option><option>Barrack</option><option>Kalima</option>";
@@ -780,6 +798,8 @@
 				var level = callback["level"]
 				var taikhoandangnhap = callback["taikhoandangnhap"]
 				var classs = callback["class"]
+
+
 				setHtmlCssSelector("#namehero", namehero)
 				setHtmlCssSelector("#taikhoandangnhap", taikhoandangnhap)
 				setHtmlCssSelector("#level", level)
