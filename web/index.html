@@ -237,6 +237,10 @@
 					<label>Auto train</label>
 				</div>
 				<div class="w3-row">
+					<input class="w3-check" name="autosavecheckbox" id="anmain" type="checkbox">
+					<label>Ẩn main</label>
+				</div>
+				<div class="w3-row">
 					<div class="w3-bar-item">
 						<input class="w3-radio" type="radio" name="autoreset" value="noreset" checked>
 						<label>Không reset</label>
@@ -257,7 +261,6 @@
 						<input class="w3-radio" type="radio" name="autoreset" value="po">
 						<label>Reset PO web</label>
 					</div>
-
 				</div>
 
 
@@ -805,7 +808,15 @@
 				txtArea.value = value;
 			})
 		}
+		$("#table").on("dblclick", "tr", function () {
+			var pid = this.id
+			if (pid == "") {
+				return
+			}
+			eel.getInfoPidDouble(pid)()
 
+
+		});
 		$("#table").on("click", "tr", function () {
 			var pid = this.id
 			if (pid == "") {
