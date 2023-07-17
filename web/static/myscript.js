@@ -64,6 +64,7 @@ function setValueCssSelector(cssSelector, value) {
 }
 eel.expose(removeCssSelector);
 eel.expose(addRowTable);
+eel.expose(deleteRowTable);
 eel.expose(pythonToJS);
 eel.expose(setHtmlCssSelector);
 eel.expose(setValueCssSelector);
@@ -471,6 +472,15 @@ function addRowTable(selectorTable, listColumnValues, id) {
 
   // Thêm hàng mới vào cuối bảng
   table.append(newRow);
+}
+
+function deleteRowTable(id) {
+  var element = document.getElementById(id);
+  if (element) {
+    element.remove();
+  } else {
+    console.log("Không tìm thấy phần tử có id là " + id);
+  }
 }
 
 eel.getTitle()(function (callback) {
